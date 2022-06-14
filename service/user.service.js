@@ -8,4 +8,8 @@ const createEntry = (data)=>{
     return User.create(data)
 }
 
-module.exports = {findEmail,createEntry}
+const findUser = (field)=>{
+    return User.find()
+}
+
+module.exports = {findEmail,createEntry,findUser}
