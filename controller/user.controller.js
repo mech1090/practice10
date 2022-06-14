@@ -6,7 +6,23 @@ const userService = require('../service/user.service')
 const getLoginForm = (req,res)=>{
     return res.render('login/layout')
 }
-const login = (req,res)=>{}
+
+const login = async(req,res)=>{
+    const {email,password} = req.body
+    const fields = {email,password}
+    const findUser = await userService.findEmail({email})
+    if(!findUser){
+        
+        return res.render('signup/layout',{message:`${email} does not exists `})
+    }
+    const matchPassword = await bcrypt.compare(password,findUser.password)
+    if(!matchPassword){
+        return res.render('login/layout',{message:'Credentials Mismatached'})
+    }
+    return res.render('user/layout')
+}
+
+
 const getSignupForm = (req,res)=>{
     return res.render('signup/layout')
 }
@@ -28,6 +44,8 @@ const getAll = async(req,res)=>{
     const allUser = await userService.findUser({email})
     return res.send(allUser)
 }
+
+
 
 
 module.exports = {getLoginForm,login,getSignupForm,signup,getAll}

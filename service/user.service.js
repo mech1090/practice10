@@ -12,4 +12,5 @@ const findUser = (field)=>{
     return User.find()
 }
 
+
 module.exports = {findEmail,createEntry,findUser}
